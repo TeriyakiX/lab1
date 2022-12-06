@@ -52,6 +52,7 @@ def UserDelete(request):
     return render(request, 'usermanagment/user_deleted.html')
 
 
+
 def all_q(request):
     questions = Question.objects.all()
     return render(request, 'polls/all_q.html', context={'questions': questions})
