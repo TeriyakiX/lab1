@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 import pytz
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     full_name = models.CharField(max_length=50, help_text="Напишите ФИО")
