@@ -1,7 +1,7 @@
 {% extends "basic.html" %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="../../../static/style.css">
+<link rel="stylesheet" href="{% static 'style.css'%}">
 <div class="jumbotron">
 <h1>{{ question.question_text }}</h1>
 <ul>

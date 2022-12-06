@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 import pytz
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     full_name = models.CharField(max_length=50, help_text="Напишите ФИО")
@@ -26,8 +25,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
-
 class Question(models.Model):
+    id = models.AutoField(primary_key=True, unique=True, verbose_name='id')
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=datetime.now())
     ex_date = models.DateTimeField(default=datetime.now() + timedelta(days=1),

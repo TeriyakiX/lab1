@@ -54,7 +54,6 @@ def UserDelete(request):
 
 def all_q(request):
     questions = Question.objects.all()
-
     return render(request, 'polls/all_q.html', context={'questions': questions})
 
 
@@ -68,10 +67,32 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+# @login_required
+# def vote(request, question_id):
+#     if Question.objects.filter(pk=question_id, voted_by=request.user):
+#         return render(request, 'vote_error.html')
+#
+#     else:
+#         question = get_object_or_404(Question, pk=question_id)
+#
+#         try:
+#             selected_choice = question.choice_set.get(pk=request.POST['choice'])
+#         except (KeyError, Choice.DoesNotExist):
+#             return render(request, 'polls/detail.html', {
+#                 'question': question,
+#                 'error_message': 'вы не сделали выбор'
+#             })
+#         else:
+#             selected_choice.votes += 1
+#             selected_choice.save()
+#             return HttpResponseRedirect(reverse('results', args=(question.id,)))
+
 def vote(request, question_id):
     if Question.objects.filter(id=question_id, voted_by=request.user):
-        return render(request, 'vote_error.html')
+        return render(request, 'errors/vote_error.html')
+
     else:
+
         question = get_object_or_404(Question, pk=question_id)
 
         try:
@@ -82,6 +103,10 @@ def vote(request, question_id):
                 'error_message': 'вы не сделали выбор'
             })
         else:
+            current_q = Question.objects.get(id=question_id)
+            current_q.voted_by.add(request.user)
+            current_q.votes += 1
+            current_q.save()
             selected_choice.votes += 1
             selected_choice.save()
             return HttpResponseRedirect(reverse('results', args=(question.id,)))
